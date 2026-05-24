@@ -1,0 +1,17 @@
+import{L as e,T as t,Y as n,_ as r,b as i,g as a,gt as o,mt as s,x as c}from"./modules/shiki-BiiZU2CK.js";import{nt as l,rt as u}from"./index-DOSQwHZ5.js";import{t as d}from"./slidev/default-OgUb329P.js";import{t as f}from"./slidev/CodeBlockWrapper-Imhk-Emx.js";var p={__name:`slides.md__slidev_23`,setup(p){let{$slidev:m,$nav:h,$clicksContext:g,$clicks:_,$page:v,$renderContext:y,$frontmatter:b}=u();return g.setup(),(u,p)=>{let m=f;return e(),r(d,o(t(s(l)(s(b),22))),{default:n(()=>[p[1]||=a(`h2`,null,`嵌套路由布局组件`,-1),c(m,{title:``,ranges:[]},{default:n(()=>[...p[0]||=[a(`pre`,{class:`shiki shiki-themes vitesse-dark vitesse-light slidev-code`,style:{"--shiki-dark":`#dbd7caee`,"--shiki-light":`#393a34`,"--shiki-dark-bg":`#121212`,"--shiki-light-bg":`#ffffff`}},[a(`code`,{class:`language-javascript`},[a(`span`,{class:`line`},[a(`span`,{style:{"--shiki-dark":`#CB7676`,"--shiki-light":`#AB5959`}},`const`),a(`span`,{style:{"--shiki-dark":`#BD976A`,"--shiki-light":`#B07D48`}},` UserLayout`),a(`span`,{style:{"--shiki-dark":`#666666`,"--shiki-light":`#999999`}},` =`),a(`span`,{style:{"--shiki-dark":`#666666`,"--shiki-light":`#999999`}},` {`)]),i(`
+`),a(`span`,{class:`line`},[a(`span`,{style:{"--shiki-dark":`#B8A965`,"--shiki-light":`#998418`}},`    template`),a(`span`,{style:{"--shiki-dark":`#666666`,"--shiki-light":`#999999`}},`:`),a(`span`,{style:{"--shiki-dark":`#C98A7D77`,"--shiki-light":`#B5695977`}}," `")]),i(`
+`),a(`span`,{class:`line`},[a(`span`,{style:{"--shiki-dark":`#C98A7D`,"--shiki-light":`#B56959`}},`        <div class="user-layout">`)]),i(`
+`),a(`span`,{class:`line`},[a(`span`,{style:{"--shiki-dark":`#C98A7D`,"--shiki-light":`#B56959`}},`            <!-- 侧边导航 -->`)]),i(`
+`),a(`span`,{class:`line`},[a(`span`,{style:{"--shiki-dark":`#C98A7D`,"--shiki-light":`#B56959`}},`            <aside>`)]),i(`
+`),a(`span`,{class:`line`},[a(`span`,{style:{"--shiki-dark":`#C98A7D`,"--shiki-light":`#B56959`}},`                <router-link to="/user">📋 个人资料</router-link>`)]),i(`
+`),a(`span`,{class:`line`},[a(`span`,{style:{"--shiki-dark":`#C98A7D`,"--shiki-light":`#B56959`}},`                <router-link to="/user/orders">📦 我的订单</router-link>`)]),i(`
+`),a(`span`,{class:`line`},[a(`span`,{style:{"--shiki-dark":`#C98A7D`,"--shiki-light":`#B56959`}},`                <router-link to="/user/settings">⚙️ 设置</router-link>`)]),i(`
+`),a(`span`,{class:`line`},[a(`span`,{style:{"--shiki-dark":`#C98A7D`,"--shiki-light":`#B56959`}},`            </aside>`)]),i(`
+`),a(`span`,{class:`line`}),i(`
+`),a(`span`,{class:`line`},[a(`span`,{style:{"--shiki-dark":`#C98A7D`,"--shiki-light":`#B56959`}},`            <!-- 子路由渲染位置 -->`)]),i(`
+`),a(`span`,{class:`line`},[a(`span`,{style:{"--shiki-dark":`#C98A7D`,"--shiki-light":`#B56959`}},`            <main>`)]),i(`
+`),a(`span`,{class:`line`},[a(`span`,{style:{"--shiki-dark":`#C98A7D`,"--shiki-light":`#B56959`}},`                <router-view></router-view>`)]),i(`
+`),a(`span`,{class:`line`},[a(`span`,{style:{"--shiki-dark":`#C98A7D`,"--shiki-light":`#B56959`}},`            </main>`)]),i(`
+`),a(`span`,{class:`line`},[a(`span`,{style:{"--shiki-dark":`#C98A7D`,"--shiki-light":`#B56959`}},`        </div>`)]),i(`
+`),a(`span`,{class:`line`},[a(`span`,{style:{"--shiki-dark":`#C98A7D77`,"--shiki-light":`#B5695977`}},"    `")]),i(`
+`),a(`span`,{class:`line`},[a(`span`,{style:{"--shiki-dark":`#666666`,"--shiki-light":`#999999`}},`};`)])])],-1)]]),_:1})]),_:1},16)}}};export{p as default};
