@@ -1,0 +1,6 @@
+import{$ as e,B as t,C as n,D as r,S as i,bt as a,v as o,vt as s,y as c}from"./modules/shiki-CTdSUu6C.js";import{nt as l,rt as u}from"./index-t3pwYhwK.js";import{t as d}from"./slidev/CodeBlockWrapper-Di5kN4_M.js";import{t as f}from"./movie-C8uXYNyH.js";var p={__name:`lecture02.md__slidev_9`,setup(p){let{$slidev:m,$nav:h,$clicksContext:g,$clicks:_,$page:v,$renderContext:y,$frontmatter:b}=u();return g.setup(),(u,p)=>{let m=d;return t(),c(f,a(r(s(l)(s(b),8))),{default:e(()=>[p[1]||=o(`h1`,null,`6 个子网`,-1),n(m,{title:``,ranges:[`all`,`1`,`2`,`3`,`4`,`5`,`6`]},{default:e(()=>[...p[0]||=[o(`pre`,{class:`shiki shiki-themes vitesse-dark vitesse-light slidev-code`,style:{"--shiki-dark":`#dbd7caee`,"--shiki-light":`#393a34`,"--shiki-dark-bg":`#121212`,"--shiki-light-bg":`#ffffff`}},[o(`code`,{class:`language-text`},[o(`span`,{class:`line`},[o(`span`,null,`1: 192.168.10.0    /27`)]),i(`
+`),o(`span`,{class:`line`},[o(`span`,null,`2: 192.168.10.32   /27`)]),i(`
+`),o(`span`,{class:`line`},[o(`span`,null,`3: 192.168.10.64   /27`)]),i(`
+`),o(`span`,{class:`line`},[o(`span`,null,`4: 192.168.10.96   /27`)]),i(`
+`),o(`span`,{class:`line`},[o(`span`,null,`5: 192.168.10.128  /27`)]),i(`
+`),o(`span`,{class:`line`},[o(`span`,null,`6: 192.168.10.160  /27`)])])],-1)]]),_:1})]),_:1},16)}}};export{p as default};
