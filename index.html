@@ -1,28 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Slidev Presentations</title>
+    <title>Slidev 演示文稿</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <style>
+        /* Design tokens: extend the existing palette, keep the gradient language */
         :root {
             --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             --card-hover-transform: translateY(-4px);
+
+            /* Course accent gradients */
+            --course-web: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --course-cloud: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            --course-network: linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%);
+            --course-ai: linear-gradient(135deg, #f7971e 0%, #ffd200 100%);
+
+            /* Surfaces (light default) */
+            --bg-body: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --surface: #ffffff;
+            --surface-border: rgba(0, 0, 0, 0.05);
+            --text-strong: #1a202c;
+            --text-title: #2d3748;
+            --text-muted: #4a5568;
+            --text-faint: #718096;
+            --arrow: #cbd5e0;
+            --arrow-active: #667eea;
+            --header-bg: #ffffffd9;
+            --chip-bg: #ffffff;
+            --chip-border: #d0d5dd;
+            --chip-active-text: #ffffff;
+        }
+
+        /* Dark mode: switch token values, keep structure */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-body: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+                --surface: #1e293b;
+                --surface-border: rgba(255, 255, 255, 0.08);
+                --text-strong: #f1f5f9;
+                --text-title: #e2e8f0;
+                --text-muted: #cbd5e1;
+                --text-faint: #94a3b8;
+                --arrow: #64748b;
+                --arrow-active: #a5b4fc;
+                --header-bg: #0f172acc;
+                --chip-bg: #1e293b;
+                --chip-border: #475569;
+                --chip-active-text: #ffffff;
+            }
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: var(--bg-body);
             min-height: 100vh;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: var(--text-strong);
         }
 
+        /* ---- Hero ---- */
         .hero-section {
             background: var(--primary-gradient);
             color: white;
             padding: 3rem 0;
-            margin-bottom: 2rem;
+            margin-bottom: 0;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
@@ -37,23 +84,182 @@
             opacity: 0.9;
         }
 
-        .lecture-card {
-            background: white;
+        .hero-count {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.35rem 1rem;
+            background: rgba(255, 255, 255, 0.16);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            border-radius: 999px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* ---- Sticky control bar (search + filter chips + anchor nav) ---- */
+        .control-bar {
+            position: sticky;
+            top: 0;
+            z-index: 1020;
+            background: var(--header-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--surface-border);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+
+        .search-input {
+            border-radius: 999px;
+            border: 1px solid var(--chip-border);
+            background: var(--chip-bg);
+            color: var(--text-strong);
+            padding: 0.5rem 1rem 0.5rem 2.4rem;
+            width: 100%;
+            font-size: 0.95rem;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.25);
+        }
+
+        .search-wrap {
+            position: relative;
+        }
+
+        .search-wrap .bi-search {
+            position: absolute;
+            left: 0.9rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-faint);
+        }
+
+        .chip-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .filter-chip {
+            border: 1px solid var(--chip-border);
+            background: var(--chip-bg);
+            color: var(--text-title);
+            border-radius: 999px;
+            padding: 0.35rem 0.9rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .filter-chip:hover {
+            transform: translateY(-1px);
+            border-color: #667eea;
+            color: #667eea;
+        }
+
+        .filter-chip.active {
+            background: var(--primary-gradient);
+            color: var(--chip-active-text);
+            border-color: transparent;
+        }
+
+        .anchor-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.25rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        .anchor-nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .anchor-nav a:hover {
+            color: #667eea;
+        }
+
+        /* ---- Course group header ---- */
+        .course-group {
+            scroll-margin-top: 7rem;
+        }
+
+        .course-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 2.5rem 0 1.25rem;
+        }
+
+        .course-header .course-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
             border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
+            color: white;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .course-header .course-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-strong);
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        .course-header .course-sub {
+            font-size: 0.85rem;
+            color: var(--text-faint);
+            margin: 0;
+        }
+
+        .course-rule {
+            flex: 1;
+            height: 2px;
+            border-radius: 2px;
+            opacity: 0.7;
+        }
+
+        /* ---- Lecture cards (grid) ---- */
+        .lecture-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .lecture-card {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
             transition: all 0.3s ease;
-            border: 1px solid rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--surface-border);
             text-decoration: none;
             color: inherit;
             display: block;
+            height: 100%;
         }
 
         .lecture-card:hover {
             transform: var(--card-hover-transform);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-            border-color: rgba(102, 126, 234, 0.3);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+            border-color: rgba(102, 126, 234, 0.35);
+        }
+
+        .lecture-card:focus-visible {
+            outline: 3px solid #667eea;
+            outline-offset: 2px;
+            border-radius: 12px;
         }
 
         .lecture-number {
@@ -62,70 +268,136 @@
             justify-content: center;
             width: 48px;
             height: 48px;
-            background: var(--primary-gradient);
-            color: white;
             border-radius: 12px;
+            color: white;
             font-weight: 700;
             font-size: 1.2rem;
             margin-right: 1rem;
+            flex-shrink: 0;
         }
 
         .lecture-info {
             flex: 1;
+            min-width: 0;
         }
 
         .lecture-title {
-            font-size: 1.25rem;
+            font-size: 1.15rem;
             font-weight: 600;
-            color: #2d3748;
+            color: var(--text-title);
             margin-bottom: 0.25rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .lecture-meta {
-            font-size: 0.875rem;
-            color: #718096;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .lecture-arrow {
-            color: #cbd5e0;
-            font-size: 1.5rem;
+            color: var(--arrow);
+            font-size: 1.4rem;
             transition: all 0.3s ease;
+            flex-shrink: 0;
+            margin-left: 0.5rem;
         }
 
         .lecture-card:hover .lecture-arrow {
-            color: #667eea;
+            color: var(--arrow-active);
             transform: translateX(4px);
         }
 
+        /* empty state when search yields no results */
+        .no-results {
+            display: none;
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-faint);
+            font-size: 1.05rem;
+        }
+        .no-results.show {
+            display: block;
+        }
+
+        /* ---- Footer ---- */
         .footer {
             text-align: center;
-            padding: 2rem 0;
-            color: #718096;
+            padding: 2.5rem 0 2rem;
+            color: var(--text-faint);
             font-size: 0.875rem;
+            margin-top: 2rem;
+            border-top: 1px solid var(--surface-border);
+        }
+
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .back-to-top {
+            position: fixed;
+            right: 1.25rem;
+            bottom: 1.25rem;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: none;
+            background: var(--primary-gradient);
+            color: white;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1030;
+        }
+        .back-to-top.show {
+            display: inline-flex;
+        }
+        .back-to-top:focus-visible {
+            outline: 3px solid #667eea;
+            outline-offset: 2px;
+        }
+
+        /* ---- Responsive ---- */
+        @media (max-width: 991.98px) {
+            .lecture-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 768px) {
             .hero-title {
                 font-size: 2rem;
             }
-
             .lecture-card {
                 padding: 1rem;
             }
-
             .lecture-number {
                 width: 40px;
                 height: 40px;
                 font-size: 1rem;
             }
-
             .lecture-title {
-                font-size: 1.1rem;
+                font-size: 1.05rem;
+            }
+            .course-header .course-title {
+                font-size: 1.3rem;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Hero -->
     <div class="hero-section">
         <div class="container">
             <div class="row justify-content-center">
@@ -134,219 +406,337 @@
                         <i class="bi bi-easel"></i> Slidev 演示文稿
                     </h1>
                     <p class="hero-subtitle">演示文稿和课程材料</p>
+                    <span class="hero-count" id="total-count"><i class="bi bi-collection"></i> 共 0 讲</span>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <a href="/slidev/web/lecture01/index.html" class="lecture-card">
-                    <div class="d-flex align-items-center">
-                        <span class="lecture-number">01</span>
-                        <div class="lecture-info">
-                            <div class="lecture-title">第1讲</div>
-                            <div class="lecture-meta">
-                                <i class="bi bi-calendar3"></i> 课程认知
-                            </div>
-                        </div>
-                        <i class="bi bi-chevron-right lecture-arrow"></i>
-                    </div>
-                </a>
-                <a href="/slidev/web/lecture02/index.html" class="lecture-card">
-                    <div class="d-flex align-items-center">
-                        <span class="lecture-number">02</span>
-                        <div class="lecture-info">
-                            <div class="lecture-title">第2讲</div>
-                            <div class="lecture-meta">
-                                <i class="bi bi-calendar3"></i> JavaScript 入门
-                            </div>
-                        </div>
-                        <i class="bi bi-chevron-right lecture-arrow"></i>
-                    </div>
-                </a>
-                <a href="/slidev/web/lecture03/index.html" class="lecture-card">
-                    <div class="d-flex align-items-center">
-                        <span class="lecture-number">03</span>
-                        <div class="lecture-info">
-                            <div class="lecture-title">第3讲</div>
-                            <div class="lecture-meta">
-                                <i class="bi bi-calendar3"></i> JavaScript 面向对象编程与内置对象
-                            </div>
-                        </div>
-                        <i class="bi bi-chevron-right lecture-arrow"></i>
-                    </div>
-                </a>
-                <a href="/slidev/web/lecture04/index.html" class="lecture-card">
-                    <div class="d-flex align-items-center">
-                        <span class="lecture-number">04</span>
-                        <div class="lecture-info">
-                            <div class="lecture-title">第4讲</div>
-                            <div class="lecture-meta">
-                                <i class="bi bi-calendar3"></i> JavaScript 事件处理
-                            </div>
-                        </div>
-                        <i class="bi bi-chevron-right lecture-arrow"></i>
-                    </div>
-                </a>
-                <a href="/slidev/web/lecture05/index.html" class="lecture-card">
-                    <div class="d-flex align-items-center">
-                        <span class="lecture-number">05</span>
-                        <div class="lecture-info">
-                            <div class="lecture-title">第5讲</div>
-                            <div class="lecture-meta">
-                                <i class="bi bi-calendar3"></i> JavaScript 数据组织与验证
-                            </div>
-                        </div>
-                        <i class="bi bi-chevron-right lecture-arrow"></i>
-                    </div>
-                </a>
-                <a href="/slidev/web/lecture06/index.html" class="lecture-card">
-                    <div class="d-flex align-items-center">
-                        <span class="lecture-number">06</span>
-                        <div class="lecture-info">
-                            <div class="lecture-title">第6讲</div>
-                            <div class="lecture-meta">
-                                <i class="bi bi-calendar3"></i> JavaScript 数据传递与共享 
-                            </div>
-                        </div>
-                        <i class="bi bi-chevron-right lecture-arrow"></i>
-                    </div>
-                </a>
-
-                <a href="/slidev/web/lecture08/index.html" class="lecture-card">
-                    <div class="d-flex align-items-center">
-                        <span class="lecture-number">08-09</span>
-                        <div class="lecture-info">
-                            <div class="lecture-title">第8、9讲</div>
-                            <div class="lecture-meta">
-                                <i class="bi bi-calendar3"></i> Bootstrap 框架 
-                            </div>
-                        </div>
-                        <i class="bi bi-chevron-right lecture-arrow"></i>
-                    </div>
-                </a>
-                <a href="/slidev/web/lecture10/index.html" class="lecture-card">
-                    <div class="d-flex align-items-center">
-                        <span class="lecture-number">10</span>
-                        <div class="lecture-info">
-                            <div class="lecture-title">第10讲</div>
-                            <div class="lecture-meta">
-                                <i class="bi bi-calendar3"></i> Vue 基础 
-                            </div>
-                        </div>
-                        <i class="bi bi-chevron-right lecture-arrow"></i>
-                    </div>
-                </a>
-                <a href="/slidev/web/lecture11/index.html" class="lecture-card">
-                    <div class="d-flex align-items-center">
-                        <span class="lecture-number">11</span>
-                        <div class="lecture-info">
-                            <div class="lecture-title">第11讲</div>
-                            <div class="lecture-meta">
-                                <i class="bi bi-calendar3"></i> Vue 计算属性与监听器 
-                            </div>
-                        </div>
-                        <i class="bi bi-chevron-right lecture-arrow"></i>
-                    </div>
-                </a>
-                <a href="/slidev/web/lecture12/index.html" class="lecture-card">
-                    <div class="d-flex align-items-center">
-                        <span class="lecture-number">12</span>
-                        <div class="lecture-info">
-                            <div class="lecture-title">第12讲</div>
-                            <div class="lecture-meta">
-                                <i class="bi bi-calendar3"></i> Vue 绑定操作 
-                            </div>
-                        </div>
-                        <i class="bi bi-chevron-right lecture-arrow"></i>
-                    </div>
-                </a>
-                <a href="/slidev/web/lecture13/index.html" class="lecture-card">
-                    <div class="d-flex align-items-center">
-                        <span class="lecture-number">13</span>
-                        <div class="lecture-info">
-                            <div class="lecture-title">第13讲</div>
-                            <div class="lecture-meta">
-                                <i class="bi bi-calendar3"></i> Vue 组件与实例 
-                            </div>
-                        </div>
-                        <i class="bi bi-chevron-right lecture-arrow"></i>
-                    </div>
-                </a>
-                <a href="/slidev/web/lecture14/index.html" class="lecture-card">
-                    <div class="d-flex align-items-center">
-                        <span class="lecture-number">14</span>
-                        <div class="lecture-info">
-                            <div class="lecture-title">第14讲</div>
-                            <div class="lecture-meta">
-                                <i class="bi bi-calendar3"></i> Vue Router 路由
-                            </div>
-                        </div>
-                        <i class="bi bi-chevron-right lecture-arrow"></i>
-                    </div>
-                </a>
-                <a href="/slidev/web/lecture15/index.html" class="lecture-card">
-                    <div class="d-flex align-items-center">
-                        <span class="lecture-number">15</span>
-                        <div class="lecture-info">
-                            <div class="lecture-title">第15讲</div>
-                            <div class="lecture-meta">
-                                <i class="bi bi-calendar3"></i> Axios 与 Pinia
-                            </div>
-                        </div>
-                        <i class="bi bi-chevron-right lecture-arrow"></i>
-                    </div>
-                </a>
-
-                <div class="lecture-card" style="background: linear-gradient(135deg, #667eea20, #764ba220); border: 1px dashed #667eea55; cursor: default;">
-                    <div class="d-flex align-items-center">
-                        <span class="lecture-number" style="background: linear-gradient(135deg, #11998e, #38ef7d);">云</span>
-                        <div class="lecture-info">
-                            <div class="lecture-title">云平台开发</div>
-                            <div class="lecture-meta">
-                                <i class="bi bi-box-seam"></i> Docker 云平台开发
-                            </div>
-                        </div>
+    <!-- Sticky control bar: search + filter chips + anchor nav -->
+    <nav class="control-bar" aria-label="课程导航与筛选">
+        <div class="container">
+            <div class="row align-items-center g-2">
+                <div class="col-lg-4">
+                    <div class="search-wrap">
+                        <i class="bi bi-search"></i>
+                        <input type="search" id="search-input" class="search-input" placeholder="搜索课程 / 主题…" aria-label="搜索课程" role="searchbox">
                     </div>
                 </div>
-                <a href="/slidev/cloud-dev/lecture01/index.html" class="lecture-card">
-                    <div class="d-flex align-items-center">
-                        <span class="lecture-number">01</span>
-                        <div class="lecture-info">
-                            <div class="lecture-title">第1讲</div>
-                            <div class="lecture-meta">
-                                <i class="bi bi-calendar3"></i> 云平台开发概述（云原生 + Docker）
-                            </div>
-                        </div>
-                        <i class="bi bi-chevron-right lecture-arrow"></i>
+                <div class="col-lg-5">
+                    <div class="chip-group" id="chip-group" role="group" aria-label="按课程筛选">
+                        <button class="filter-chip active" data-course="all">全部</button>
+                        <button class="filter-chip" data-course="web">Web 前端</button>
+                        <button class="filter-chip" data-course="cloud-dev">云平台开发</button>
+                        <button class="filter-chip" data-course="network">网络</button>
+                        <button class="filter-chip" data-course="ai">AI</button>
                     </div>
-                </a>
-                <a href="/slidev/cloud-dev/lecture02/index.html" class="lecture-card">
-                    <div class="d-flex align-items-center">
-                        <span class="lecture-number">02</span>
-                        <div class="lecture-info">
-                            <div class="lecture-title">第2讲</div>
-                            <div class="lecture-meta">
-                                <i class="bi bi-calendar3"></i> Docker安装与常用命令
-                            </div>
-                        </div>
-                        <i class="bi bi-chevron-right lecture-arrow"></i>
+                </div>
+                <div class="col-lg-3">
+                    <div class="anchor-nav justify-content-lg-end">
+                        <a href="#web">Web</a>
+                        <a href="#cloud-dev">云平台</a>
+                        <a href="#network">网络</a>
+                        <a href="#ai">AI</a>
                     </div>
-                </a>
-                <a href="/slidev/cloud-dev/lecture03/index.html" class="lecture-card">
-                    <div class="d-flex align-items-center">
-                        <span class="lecture-number">03</span>
-                        <div class="lecture-info">
-                            <div class="lecture-title">第3讲</div>
-                            <div class="lecture-meta">
-                                <i class="bi bi-calendar3"></i> Dockerfile 介绍
-                            </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+
+                <!-- ============ Web 前端 ============ -->
+                <section class="course-group" id="web" aria-labelledby="web-title">
+                    <div class="course-header">
+                        <span class="course-icon" style="background: var(--course-web);"><i class="bi bi-window-desktop"></i></span>
+                        <div>
+                            <h2 class="course-title" id="web-title">Web 前端</h2>
+                            <p class="course-sub">JavaScript · Bootstrap · Vue</p>
                         </div>
-                        <i class="bi bi-chevron-right lecture-arrow"></i>
+                        <span class="course-rule" style="background: var(--course-web);"></span>
                     </div>
-                </a>
+                    <div class="lecture-grid" data-course="web">
+                        <a href="/slidev/web/lecture01/index.html" class="lecture-card" data-title="第1讲 课程认知" data-topic="课程认知">
+                            <div class="d-flex align-items-center">
+                                <span class="lecture-number" style="background: var(--course-web);">01</span>
+                                <div class="lecture-info">
+                                    <div class="lecture-title">第1讲 课程认知</div>
+                                    <div class="lecture-meta">
+                                        <i class="bi bi-calendar3"></i> 课程认知
+                                    </div>
+                                </div>
+                                <i class="bi bi-chevron-right lecture-arrow"></i>
+                            </div>
+                        </a>
+                        <a href="/slidev/web/lecture02/index.html" class="lecture-card" data-title="第2讲 JavaScript 入门" data-topic="JavaScript 入门">
+                            <div class="d-flex align-items-center">
+                                <span class="lecture-number" style="background: var(--course-web);">02</span>
+                                <div class="lecture-info">
+                                    <div class="lecture-title">第2讲 JavaScript 入门</div>
+                                    <div class="lecture-meta">
+                                        <i class="bi bi-calendar3"></i> JavaScript 入门
+                                    </div>
+                                </div>
+                                <i class="bi bi-chevron-right lecture-arrow"></i>
+                            </div>
+                        </a>
+                        <a href="/slidev/web/lecture03/index.html" class="lecture-card" data-title="第3讲 JavaScript 面向对象编程与内置对象" data-topic="JavaScript 面向对象编程与内置对象">
+                            <div class="d-flex align-items-center">
+                                <span class="lecture-number" style="background: var(--course-web);">03</span>
+                                <div class="lecture-info">
+                                    <div class="lecture-title">第3讲 JavaScript 面向对象编程与内置对象</div>
+                                    <div class="lecture-meta">
+                                        <i class="bi bi-calendar3"></i> JavaScript 面向对象编程与内置对象
+                                    </div>
+                                </div>
+                                <i class="bi bi-chevron-right lecture-arrow"></i>
+                            </div>
+                        </a>
+                        <a href="/slidev/web/lecture04/index.html" class="lecture-card" data-title="第4讲 JavaScript 事件处理" data-topic="JavaScript 事件处理">
+                            <div class="d-flex align-items-center">
+                                <span class="lecture-number" style="background: var(--course-web);">04</span>
+                                <div class="lecture-info">
+                                    <div class="lecture-title">第4讲 JavaScript 事件处理</div>
+                                    <div class="lecture-meta">
+                                        <i class="bi bi-calendar3"></i> JavaScript 事件处理
+                                    </div>
+                                </div>
+                                <i class="bi bi-chevron-right lecture-arrow"></i>
+                            </div>
+                        </a>
+                        <a href="/slidev/web/lecture05/index.html" class="lecture-card" data-title="第5讲 JavaScript 数据组织与验证" data-topic="JavaScript 数据组织与验证">
+                            <div class="d-flex align-items-center">
+                                <span class="lecture-number" style="background: var(--course-web);">05</span>
+                                <div class="lecture-info">
+                                    <div class="lecture-title">第5讲 JavaScript 数据组织与验证</div>
+                                    <div class="lecture-meta">
+                                        <i class="bi bi-calendar3"></i> JavaScript 数据组织与验证
+                                    </div>
+                                </div>
+                                <i class="bi bi-chevron-right lecture-arrow"></i>
+                            </div>
+                        </a>
+                        <a href="/slidev/web/lecture06/index.html" class="lecture-card" data-title="第6讲 JavaScript 数据传递与共享" data-topic="JavaScript 数据传递与共享">
+                            <div class="d-flex align-items-center">
+                                <span class="lecture-number" style="background: var(--course-web);">06</span>
+                                <div class="lecture-info">
+                                    <div class="lecture-title">第6讲 JavaScript 数据传递与共享</div>
+                                    <div class="lecture-meta">
+                                        <i class="bi bi-calendar3"></i> JavaScript 数据传递与共享
+                                    </div>
+                                </div>
+                                <i class="bi bi-chevron-right lecture-arrow"></i>
+                            </div>
+                        </a>
+                        <a href="/slidev/web/lecture08/index.html" class="lecture-card" data-title="第8、9讲 Bootstrap 框架" data-topic="Bootstrap 框架">
+                            <div class="d-flex align-items-center">
+                                <span class="lecture-number" style="background: var(--course-web);">08-09</span>
+                                <div class="lecture-info">
+                                    <div class="lecture-title">第8、9讲 Bootstrap 框架</div>
+                                    <div class="lecture-meta">
+                                        <i class="bi bi-calendar3"></i> Bootstrap 框架
+                                    </div>
+                                </div>
+                                <i class="bi bi-chevron-right lecture-arrow"></i>
+                            </div>
+                        </a>
+                        <a href="/slidev/web/lecture10/index.html" class="lecture-card" data-title="第10讲 Vue 基础" data-topic="Vue 基础">
+                            <div class="d-flex align-items-center">
+                                <span class="lecture-number" style="background: var(--course-web);">10</span>
+                                <div class="lecture-info">
+                                    <div class="lecture-title">第10讲 Vue 基础</div>
+                                    <div class="lecture-meta">
+                                        <i class="bi bi-calendar3"></i> Vue 基础
+                                    </div>
+                                </div>
+                                <i class="bi bi-chevron-right lecture-arrow"></i>
+                            </div>
+                        </a>
+                        <a href="/slidev/web/lecture11/index.html" class="lecture-card" data-title="第11讲 Vue 计算属性与监听器" data-topic="Vue 计算属性与监听器">
+                            <div class="d-flex align-items-center">
+                                <span class="lecture-number" style="background: var(--course-web);">11</span>
+                                <div class="lecture-info">
+                                    <div class="lecture-title">第11讲 Vue 计算属性与监听器</div>
+                                    <div class="lecture-meta">
+                                        <i class="bi bi-calendar3"></i> Vue 计算属性与监听器
+                                    </div>
+                                </div>
+                                <i class="bi bi-chevron-right lecture-arrow"></i>
+                            </div>
+                        </a>
+                        <a href="/slidev/web/lecture12/index.html" class="lecture-card" data-title="第12讲 Vue 绑定操作" data-topic="Vue 绑定操作">
+                            <div class="d-flex align-items-center">
+                                <span class="lecture-number" style="background: var(--course-web);">12</span>
+                                <div class="lecture-info">
+                                    <div class="lecture-title">第12讲 Vue 绑定操作</div>
+                                    <div class="lecture-meta">
+                                        <i class="bi bi-calendar3"></i> Vue 绑定操作
+                                    </div>
+                                </div>
+                                <i class="bi bi-chevron-right lecture-arrow"></i>
+                            </div>
+                        </a>
+                        <a href="/slidev/web/lecture13/index.html" class="lecture-card" data-title="第13讲 Vue 组件与实例" data-topic="Vue 组件与实例">
+                            <div class="d-flex align-items-center">
+                                <span class="lecture-number" style="background: var(--course-web);">13</span>
+                                <div class="lecture-info">
+                                    <div class="lecture-title">第13讲 Vue 组件与实例</div>
+                                    <div class="lecture-meta">
+                                        <i class="bi bi-calendar3"></i> Vue 组件与实例
+                                    </div>
+                                </div>
+                                <i class="bi bi-chevron-right lecture-arrow"></i>
+                            </div>
+                        </a>
+                        <a href="/slidev/web/lecture14/index.html" class="lecture-card" data-title="第14讲 Vue Router 路由" data-topic="Vue Router 路由">
+                            <div class="d-flex align-items-center">
+                                <span class="lecture-number" style="background: var(--course-web);">14</span>
+                                <div class="lecture-info">
+                                    <div class="lecture-title">第14讲 Vue Router 路由</div>
+                                    <div class="lecture-meta">
+                                        <i class="bi bi-calendar3"></i> Vue Router 路由
+                                    </div>
+                                </div>
+                                <i class="bi bi-chevron-right lecture-arrow"></i>
+                            </div>
+                        </a>
+                        <a href="/slidev/web/lecture15/index.html" class="lecture-card" data-title="第15讲 Axios 与 Pinia" data-topic="Axios 与 Pinia">
+                            <div class="d-flex align-items-center">
+                                <span class="lecture-number" style="background: var(--course-web);">15</span>
+                                <div class="lecture-info">
+                                    <div class="lecture-title">第15讲 Axios 与 Pinia</div>
+                                    <div class="lecture-meta">
+                                        <i class="bi bi-calendar3"></i> Axios 与 Pinia
+                                    </div>
+                                </div>
+                                <i class="bi bi-chevron-right lecture-arrow"></i>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+
+                <!-- ============ 云平台开发 ============ -->
+                <section class="course-group" id="cloud-dev" aria-labelledby="cloud-title">
+                    <div class="course-header">
+                        <span class="course-icon" style="background: var(--course-cloud);"><i class="bi bi-box-seam"></i></span>
+                        <div>
+                            <h2 class="course-title" id="cloud-title">云平台开发</h2>
+                            <p class="course-sub">Docker · 云原生</p>
+                        </div>
+                        <span class="course-rule" style="background: var(--course-cloud);"></span>
+                    </div>
+                    <div class="lecture-grid" data-course="cloud-dev">
+                        <a href="/slidev/cloud-dev/lecture01/index.html" class="lecture-card" data-title="第1讲 云平台开发概述" data-topic="云平台开发概述（云原生 + Docker）">
+                            <div class="d-flex align-items-center">
+                                <span class="lecture-number" style="background: var(--course-cloud);">01</span>
+                                <div class="lecture-info">
+                                    <div class="lecture-title">第1讲 云平台开发概述</div>
+                                    <div class="lecture-meta">
+                                        <i class="bi bi-calendar3"></i> 云平台开发概述（云原生 + Docker）
+                                    </div>
+                                </div>
+                                <i class="bi bi-chevron-right lecture-arrow"></i>
+                            </div>
+                        </a>
+                        <a href="/slidev/cloud-dev/lecture02/index.html" class="lecture-card" data-title="第2讲 Docker安装与常用命令" data-topic="Docker安装与常用命令">
+                            <div class="d-flex align-items-center">
+                                <span class="lecture-number" style="background: var(--course-cloud);">02</span>
+                                <div class="lecture-info">
+                                    <div class="lecture-title">第2讲 Docker安装与常用命令</div>
+                                    <div class="lecture-meta">
+                                        <i class="bi bi-calendar3"></i> Docker安装与常用命令
+                                    </div>
+                                </div>
+                                <i class="bi bi-chevron-right lecture-arrow"></i>
+                            </div>
+                        </a>
+                        <a href="/slidev/cloud-dev/lecture03/index.html" class="lecture-card" data-title="第3讲 Dockerfile 介绍" data-topic="Dockerfile 介绍">
+                            <div class="d-flex align-items-center">
+                                <span class="lecture-number" style="background: var(--course-cloud);">03</span>
+                                <div class="lecture-info">
+                                    <div class="lecture-title">第3讲 Dockerfile 介绍</div>
+                                    <div class="lecture-meta">
+                                        <i class="bi bi-calendar3"></i> Dockerfile 介绍
+                                    </div>
+                                </div>
+                                <i class="bi bi-chevron-right lecture-arrow"></i>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+
+                <!-- ============ 网络 ============ -->
+                <section class="course-group" id="network" aria-labelledby="network-title">
+                    <div class="course-header">
+                        <span class="course-icon" style="background: var(--course-network);"><i class="bi bi-diagram-3"></i></span>
+                        <div>
+                            <h2 class="course-title" id="network-title">网络</h2>
+                            <p class="course-sub">网络命令 · 子网划分</p>
+                        </div>
+                        <span class="course-rule" style="background: var(--course-network);"></span>
+                    </div>
+                    <div class="lecture-grid" data-course="network">
+                        <a href="/slidev/network/lecture01/index.html" class="lecture-card" data-title="实验1 常用网络命令的使用" data-topic="常用网络命令的使用">
+                            <div class="d-flex align-items-center">
+                                <span class="lecture-number" style="background: var(--course-network);">01</span>
+                                <div class="lecture-info">
+                                    <div class="lecture-title">实验1 常用网络命令的使用</div>
+                                    <div class="lecture-meta">
+                                        <i class="bi bi-calendar3"></i> 常用网络命令的使用
+                                    </div>
+                                </div>
+                                <i class="bi bi-chevron-right lecture-arrow"></i>
+                            </div>
+                        </a>
+                        <a href="/slidev/network/lecture02/index.html" class="lecture-card" data-title="实验2 子网划分与IP地址分配" data-topic="子网划分与IP地址分配">
+                            <div class="d-flex align-items-center">
+                                <span class="lecture-number" style="background: var(--course-network);">02</span>
+                                <div class="lecture-info">
+                                    <div class="lecture-title">实验2 子网划分与IP地址分配</div>
+                                    <div class="lecture-meta">
+                                        <i class="bi bi-calendar3"></i> 子网划分与IP地址分配
+                                    </div>
+                                </div>
+                                <i class="bi bi-chevron-right lecture-arrow"></i>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+
+                <!-- ============ AI ============ -->
+                <section class="course-group" id="ai" aria-labelledby="ai-title">
+                    <div class="course-header">
+                        <span class="course-icon" style="background: var(--course-ai);"><i class="bi bi-stars"></i></span>
+                        <div>
+                            <h2 class="course-title" id="ai-title">AI</h2>
+                            <p class="course-sub">能力投资</p>
+                        </div>
+                        <span class="course-rule" style="background: var(--course-ai);"></span>
+                    </div>
+                    <div class="lecture-grid" data-course="ai">
+                        <a href="/slidev/ai/embrace-ai/index.html" class="lecture-card" data-title="AI时代大学生最应该投资什么能力" data-topic="AI时代大学生最应该投资什么能力">
+                            <div class="d-flex align-items-center">
+                                <span class="lecture-number" style="background: var(--course-ai);"><i class="bi bi-stars"></i></span>
+                                <div class="lecture-info">
+                                    <div class="lecture-title">AI时代大学生最应该投资什么能力</div>
+                                    <div class="lecture-meta">
+                                        <i class="bi bi-calendar3"></i> AI时代大学生最应该投资什么能力
+                                    </div>
+                                </div>
+                                <i class="bi bi-chevron-right lecture-arrow"></i>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+
+                <!-- Empty state shown when search/filter hides everything -->
+                <div class="no-results" id="no-results">
+                    <i class="bi bi-search" style="font-size: 2rem; display:block; margin-bottom: 0.5rem;"></i>
+                    没有匹配的课程
+                </div>
+
             </div>
         </div>
     </div>
@@ -354,9 +744,111 @@
     <footer class="footer">
         <div class="container">
             <p>&copy; 2025 Slidev Presentations. Built with <i class="bi bi-heart-fill text-danger"></i> using Bootstrap.</p>
+            <p class="mb-0"><a href="/slidev/">返回首页</a></p>
         </div>
     </footer>
 
+    <!-- Back to top -->
+    <button class="back-to-top" id="back-to-top" aria-label="返回顶部">
+        <i class="bi bi-arrow-up"></i>
+    </button>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        (function () {
+            'use strict';
+
+            var cards = Array.prototype.slice.call(document.querySelectorAll('.lecture-card'));
+            var grids = Array.prototype.slice.call(document.querySelectorAll('.lecture-grid'));
+            var searchInput = document.getElementById('search-input');
+            var chips = Array.prototype.slice.call(document.querySelectorAll('.filter-chip'));
+            var noResults = document.getElementById('no-results');
+            var totalCount = document.getElementById('total-count');
+            var backToTop = document.getElementById('back-to-top');
+
+            var activeCourse = 'all';
+            var query = '';
+
+            function normalize(s) {
+                return s.toLowerCase().trim();
+            }
+
+            function visibleCount() {
+                return cards.filter(function (c) {
+                    return c.style.display !== 'none';
+                }).length;
+            }
+
+            // Update the total count in hero (total, not filtered)
+            if (totalCount) {
+                totalCount.innerHTML = '<i class="bi bi-collection"></i> 共 ' + cards.length + ' 讲';
+            }
+
+            // Show/hide each course group based on filter + search
+            function applyFilters() {
+                var anyVisible = false;
+
+                grids.forEach(function (grid) {
+                    var course = grid.getAttribute('data-course');
+                    var courseMatch = (activeCourse === 'all') || (course === activeCourse);
+                    var gridHasMatch = false;
+
+                    Array.prototype.forEach.call(grid.querySelectorAll('.lecture-card'), function (card) {
+                        var text = normalize(card.getAttribute('data-title') + ' ' + card.getAttribute('data-topic'));
+                        var textMatch = text.indexOf(query) !== -1;
+
+                        var show = courseMatch && textMatch;
+                        card.style.display = show ? '' : 'none';
+                        if (show) {
+                            gridHasMatch = true;
+                            anyVisible = true;
+                        }
+                    });
+
+                    // Hide the whole course section if no card matches
+                    var section = grid.closest('.course-group');
+                    if (section) {
+                        section.style.display = gridHasMatch ? '' : 'none';
+                    }
+                });
+
+                if (noResults) {
+                    noResults.classList.toggle('show', !anyVisible);
+                }
+            }
+
+            // Search input
+            if (searchInput) {
+                searchInput.addEventListener('input', function () {
+                    query = normalize(searchInput.value);
+                    applyFilters();
+                });
+            }
+
+            // Filter chips
+            chips.forEach(function (chip) {
+                chip.addEventListener('click', function () {
+                    chips.forEach(function (c) { c.classList.remove('active'); });
+                    chip.classList.add('active');
+                    activeCourse = chip.getAttribute('data-course');
+                    applyFilters();
+                });
+            });
+
+            // Back to top
+            if (backToTop) {
+                window.addEventListener('scroll', function () {
+                    if (window.scrollY > 400) {
+                        backToTop.classList.add('show');
+                    } else {
+                        backToTop.classList.remove('show');
+                    }
+                });
+                backToTop.addEventListener('click', function () {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            }
+        })();
+    </script>
 </body>
 </html>
