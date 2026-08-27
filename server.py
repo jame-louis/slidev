@@ -5,7 +5,7 @@ import os
 import sys
 
 BASE_PATH = "/slidev"
-PORT = 8000
+PORT = 8090
 DIRECTORY = "."  # your build output folder
 
 class Handler(http.server.SimpleHTTPRequestHandler):
