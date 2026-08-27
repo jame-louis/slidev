@@ -1,0 +1,7 @@
+import{L as e,T as t,Y as n,_ as r,b as i,g as a,gt as o,mt as s,x as c}from"./modules/shiki-DNi1TG5r.js";import{nt as l,rt as u}from"./index-DZxoQrPs.js";import{t as d}from"./slidev/CodeBlockWrapper-BdRRqVjS.js";import{t as f}from"./slidev/default-BVS3zDNt.js";var p={__name:`slides.md__slidev_9`,setup(p){let{$slidev:m,$nav:h,$clicksContext:g,$clicks:_,$page:v,$renderContext:y,$frontmatter:b}=u();return g.setup(),(u,p)=>{let m=d;return e(),r(f,o(t(s(l)(s(b),8))),{default:n(()=>[p[1]||=a(`h1`,null,`Docker 的体系架构（重点）`,-1),c(m,{title:``,ranges:[]},{default:n(()=>[...p[0]||=[a(`pre`,{class:`shiki shiki-themes vitesse-dark vitesse-light slidev-code`,style:{"--shiki-dark":`#dbd7caee`,"--shiki-light":`#393a34`,"--shiki-dark-bg":`#121212`,"--shiki-light-bg":`#ffffff`}},[a(`code`,{class:`language-text`},[a(`span`,{class:`line`},[a(`span`,null,`┌───────────────────────────────────┐`)]),i(`
+`),a(`span`,{class:`line`},[a(`span`,null,`│  docker命令 (Client)              │`)]),i(`
+`),a(`span`,{class:`line`},[a(`span`,null,`│        │ RESTful API              │`)]),i(`
+`),a(`span`,{class:`line`},[a(`span`,null,`│        ▼                          │`)]),i(`
+`),a(`span`,{class:`line`},[a(`span`,null,`│  docker daemon (Server)           │`)]),i(`
+`),a(`span`,{class:`line`},[a(`span`,null,`│    │ 管理镜像/容器/网络/仓库       │`)]),i(`
+`),a(`span`,{class:`line`},[a(`span`,null,`└───────────────────────────────────┘`)])])],-1)]]),_:1}),p[2]||=a(`p`,null,[a(`strong`,null,`C/S 结构`),i(`：即使同一台机器，命令也通过 API 与 daemon 通信`)],-1)]),_:1},16)}}};export{p as default};
